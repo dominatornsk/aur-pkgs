@@ -1,0 +1,37 @@
+pkgname=checkinstall
+pkgver=1.6.2
+pkgrel=1
+pkgdesc="Creating packages from sources"
+arch=('x86_64')
+url="http://asic-linux.com.mx/~izto/checkinstall/"
+license=('GPL')
+groups=('base-devel')
+depends=('bash')
+makedepends=('gcc>=4.9', 'make')
+options=()
+source=(http://asic-linux.com.mx/~izto/checkinstall/files/source/checkinstall-1.6.2.tar.gz \
+	patch1.patch \
+	patch2.patch \
+	patch3.patch)
+md5sums=('d7b43c92001e68243a93bcce8b1e5480'
+	'e01af4dc9f0c1f8c1fe3bf7c23da4337'
+	'279ed2bea0bcd11131d9e4ff25e468b8'
+	'b3bd1d2c243016ba405df48f4fa67ebd')
+
+prepare() {
+	cd $srcdir/$pkgname-$pkgver
+	patch -p0 < ../patch1.patch
+	patch -p0 < ../patch2.patch
+	patch -p0 < ../patch3.patch
+}
+
+build() {
+	cd $srcdir/$pkgname-$pkgver
+	make PREFIX=${pkgdir}/usr/local
+}
+
+package() {
+	cd $srcdir/$pkgname-$pkgver
+	make install PREFIX=${pkgdir}/usr/local
+	cp ${pkgdir}/usr/local/lib/checkinstall/checkinstallrc ${pkgdir}/usr/local 
+}

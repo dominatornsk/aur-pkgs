@@ -1,0 +1,16 @@
+--- Makefile	2016-05-06 22:12:25.638581923 +0600
++++ Makefile_new	2016-05-06 22:13:27.328247721 +0600
+@@ -27,13 +27,6 @@
+ 	
+ 	mkdir -p $(BINDIR)
+ 	install checkinstall makepak $(BINDIR)
+-	for file in locale/*.mo ; do \
+-		LANG=`echo $$file | sed -e 's|locale/checkinstall-||' \
+-			-e 's|\.mo||'` && \
+-		mkdir -p $(LCDIR)/$${LANG}/LC_MESSAGES && \
+-		cp $$file $(LCDIR)/$${LANG}/LC_MESSAGES/checkinstall.mo || \
+-		exit 1 ; \
+-	done
+ 	
+ 	mkdir -p $(CONFDIR)
+ 	install -m644  checkinstallrc-dist $(CONFDIR)
